@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 import numpy as np
+from PIL import Image
 from collections import defaultdict
 from operator import itemgetter
-import sys
+import sys, random
 
 class Sandpile:
     CELL_LIMIT = 3
@@ -42,6 +43,12 @@ class Sandpile:
                 matrix[i, j] = self.grid[(i + min_x, j + min_y)]
         return matrix
 
+def colourgrid(grid, colours):
+    newgrid = np.zeros((len(grid), len(grid[0]), 3), dtype=np.uint8)
+    for i in range(len(newgrid)):
+        for j in range(len(newgrid[0])):
+            newgrid[i, j] = colours[grid[i, j]]
+    return newgrid
 
 num_grains = 100
 try:
@@ -49,19 +56,24 @@ try:
 except Exception:
     pass
 
-print("Using {} grain(s)".format(num_grains))
+print("Using {} grain(s).".format(num_grains))
+print("Toppling sandpile...")
 
 sp = Sandpile(num_grains)
 
 while not sp.stable():
     sp.topple()
 
-print(sp.getgrid())
+print("...sandpile stable.")
+print("Converting sandpile to image...")
 
-#colours = [(41, 128, 185), (22, 160, 133), (142, 68, 173), (52, 73, 94)]
-#from PIL import Image
-#height = 512
-#data = np.zeros((height, height, 3), dtype=np.uint8)
-#data[10, 10] = [255, 0, 0]
-#img = Image.fromarray(data, 'RGB')
-#img.show()
+#print(sp.getgrid())
+
+colours = [(41, 128, 185), (22, 160, 133), (142, 68, 173), (52, 73, 94)]
+random.shuffle(colours)
+img = Image.fromarray(colourgrid(sp.getgrid(), colours), 'RGB')
+img.save('sandpile{}.png'.format(num_grains))
+img.show()
+
+print("...image created.")
+
