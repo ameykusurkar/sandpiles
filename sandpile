@@ -73,7 +73,7 @@ colours = [(41, 128, 185), (22, 160, 133), (142, 68, 173), (52, 73, 94)]
 random.shuffle(colours)
 img = Image.fromarray(colourgrid(sp.getgrid(), colours), 'RGB')
 img.save('sandpile{}.png'.format(num_grains))
-img.show()
+#img.show()
 
 print("...image created.")
 
