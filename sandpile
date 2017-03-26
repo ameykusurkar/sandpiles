@@ -8,6 +8,7 @@ import sys, random
 
 class Sandpile:
     CELL_LIMIT = 3
+    counter = 0
 
     def __init__(self, num_grains):
         # Use dict instead of 2D array so grid can grow infinitely
@@ -18,15 +19,18 @@ class Sandpile:
         try:
             # Find a cell larger than CELL_LIMIT, and distribute to neighbours
             (i, j) = next(filter(lambda k: self.grid[k] > self.CELL_LIMIT, self.grid))
-            self.grid[(i, j)] -= self.CELL_LIMIT + 1
-            self.increment_neighbours(i, j)
+            #self.increment_neighbours(i, j, 1)
+            #self.grid[(i, j)] -= self.CELL_LIMIT + 1
+            self.increment_neighbours(i, j, self.grid[(i, j)] // (self.CELL_LIMIT+1))
+            self.grid[(i, j)] %= self.CELL_LIMIT + 1
+            self.counter += 1
         except StopIteration:
             return
 
-    def increment_neighbours(self, i, j):
+    def increment_neighbours(self, i, j, inc_value):
         neighbours = [(0, -1), (-1, 0), (1, 0), (0, 1)]
         for x, y in neighbours:
-            self.grid[(i+x, j+y)] += 1
+            self.grid[(i+x, j+y)] += inc_value
 
     def stable(self):
         return all(x <= self.CELL_LIMIT for x in self.grid.values())
@@ -42,6 +46,10 @@ class Sandpile:
             for j in range(len(matrix[0])):
                 matrix[i, j] = self.grid[(i + min_x, j + min_y)]
         return matrix
+
+    def sum_pile():
+        return sum(self.grid.values())
+
 
 def colourgrid(grid, colours):
     newgrid = np.zeros((len(grid), len(grid[0]), 3), dtype=np.uint8)
@@ -67,13 +75,14 @@ while not sp.stable():
 print("...sandpile stable.")
 print("Converting sandpile to image...")
 
-#print(sp.getgrid())
+#print(sp.sum_pile())
 
 colours = [(41, 128, 185), (22, 160, 133), (142, 68, 173), (52, 73, 94)]
 random.shuffle(colours)
 img = Image.fromarray(colourgrid(sp.getgrid(), colours), 'RGB')
-img.save('sandpile{}.png'.format(num_grains))
-#img.show()
+#img.save('sandpile{}.png'.format(num_grains))
+img.show()
+print("Counter: " + str(sp.counter))
 
 print("...image created.")
 
