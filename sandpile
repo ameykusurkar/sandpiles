@@ -12,11 +12,7 @@ class Sandpile:
     def __init__(self, num_grains):
         # Use dict instead of 2D array so grid can grow infinitely
         self.grid = defaultdict(int)
-        self.unstable = {}
-        self.unstable[(0, 0)] = num_grains
-        self.done = num_grains <= self.CELL_LIMIT
-        if self.done:
-            self.grid[(0, 0)] = num_grains
+        self.unstable = {(0, 0): num_grains}
 
     def topple(self):
         try:
@@ -41,7 +37,7 @@ class Sandpile:
                     self.unstable[nbr] = grains
 
     def stable(self):
-        return (not self.unstable) or self.done
+        return (not self.unstable)
 
     # Convert dict into 2D array
     def getgrid(self):
