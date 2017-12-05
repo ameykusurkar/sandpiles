@@ -11,4 +11,4 @@ We keep toppling until no cell has more than 3 grains.
 If a start with a grid with `n` grains in the middle cell, 0 in the other cells, and topple the sandpile until it is stable, it forms a fractal pattern.
 We can then map number of grains to a colour and visualise the pattern. We get better results for larger `n`.
 
-_Examples can be found [here](https://github.com/ameykusurkar/sandpiles/tree/master/sandpile_images)_.
+_An example can be found [here](https://github.com/ameykusurkar/sandpiles/blob/master/sandpile_images/sandpile1000000.png)_.
