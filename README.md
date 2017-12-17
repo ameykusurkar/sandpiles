@@ -2,7 +2,7 @@
 
 ## What is a sandpile?
 
-A sandpile is a grid, with the value in each cell representing the number of 'grains' in that cell.
+A [sandpile](https://en.wikipedia.org/wiki/Abelian_sandpile_model) is a grid, with the value in each cell representing the number of 'grains' in that cell.
 A cell can have at most 3 grains, so if it has more, it gives a grain to each of its 4 neighbours (this is called *toppling*).
 We keep toppling until no cell has more than 3 grains.
 
