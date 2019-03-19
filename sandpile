@@ -88,4 +88,3 @@ img.save('sandpile{}.png'.format(num_grains))
 img.show()
 
 print("...image created.")
-
